@@ -9,12 +9,23 @@
 </nav>
 
 <script>
+  console.log("Header geladen!");
   $.get("../../backend/auth/check_login.php", function(response) {
+    console.log(response); // <-- DAS hier einbauen!
     if (response.loggedIn) {
+      let adminBtn = "";
+      if (response.typ === "admin") {
+        adminBtn = `<a href="../../frontend/views/create_product.html" class="btn btn-light me-2">Produkte anlegen</a>`;
+      }
+
       $(".auth-buttons").html(`
+        ${adminBtn}
         <span class="text-white me-3">Hallo, ${response.vorname}</span>
         <a href="../../backend/auth/logout.php" class="btn btn-outline-light">Logout</a>
       `);
     }
   }, "json");
 </script>
+
+
+

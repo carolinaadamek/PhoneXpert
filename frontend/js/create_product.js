@@ -1,0 +1,26 @@
+$("#productForm").on("submit", function(e) {
+    e.preventDefault();
+    let formData = new FormData(this);
+
+    $.ajax({
+        url: "../../backend/auth/create_product.php",
+        method: "POST",
+        data: formData,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function(response) {
+            if (response.status === "success") {
+                $("#meldung").html(`<span class="text-success">${response.message}</span>`);
+                $("#productForm")[0].reset();
+            } else {
+                $("#meldung").html(`<span class="text-danger">${response.message}</span>`);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("Fehlerdetails:", xhr.responseText);
+            $("#meldung").html(`<span class="text-danger">Serverfehler: ${xhr.status} - ${xhr.statusText}</span>`);
+        }
+
+    });
+});

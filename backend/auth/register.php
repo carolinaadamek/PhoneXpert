@@ -19,6 +19,8 @@ if ($check->num_rows > 0) {
     exit;
 }
 
+
+
 $hash = password_hash($password, PASSWORD_DEFAULT);
 $typ = 'kunde';
 
