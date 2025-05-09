@@ -20,23 +20,28 @@ $(document).ready(function() {
                 let html = "";
                 produkte.forEach((p, index) => {
                     const collapseId = "collapse_" + index;
-                    html += `
-                        <div class="col-md-4">
-                            <div class="card shadow p-2 square-card d-flex flex-column justify-content-between">
-                                <div class="preview-wrapper text-center" data-bs-toggle="collapse" data-bs-target="#${collapseId}" style="cursor: pointer;">
-                                    <img src="../img/${p.image_path}" class="small-preview mb-2" alt="${p.name}">
-                                    <h6 class="card-title small mb-1">${p.name}</h6>
-                                    <p class="fw-bold text-primary small mb-0">${parseFloat(p.preis).toFixed(2)} €</p>
-                                </div>
-                                <div class="collapse" id="${collapseId}">
-                                    <img src="../img/${p.image_path}" class="img-fluid border-top full-image" alt="${p.name}">
-                                    <div class="card-body pt-2 pb-2 border-top">
-                                        <p class="text-muted small">${p.beschreibung}</p>
-                                    </div>
-                                </div>
+                                        html += `
+                      <div class="col-md-4">
+                        <div class="card shadow h-100">
+                          <div class="preview-wrapper" data-bs-toggle="collapse" data-bs-target="#collapse_${index}" style="cursor: pointer;">
+                            <img src="../img/${p.image_path}" class="card-img-top small-img" alt="${p.name}">
+                            <div class="card-body text-center">
+                              <h6 class="card-title mb-1">${p.name}</h6>
+                              <p class="fw-bold text-primary mb-0">${parseFloat(p.preis).toFixed(2)} €</p>
                             </div>
+                          </div>
+                    
+                          <div class="collapse" id="collapse_${index}">
+                            <div class="card-body border-top">
+                              <img src="../img/${p.image_path}" class="img-fluid mb-2 big-img" alt="${p.name}">
+                              <p class="text-muted">${p.beschreibung}</p>
+                            </div>
+                          </div>
                         </div>
+                      </div>
                     `;
+
+
                 });
 
                 $("#produktContainer").html(html);
@@ -59,12 +64,13 @@ $(document).ready(function() {
 
     // Collapse Handling
     $(document).on("show.bs.collapse", function(e) {
-        $(e.target).closest(".card").find(".small-preview").hide();
+        $(e.target).closest(".card").find(".small-img").hide();
     });
 
     $(document).on("hide.bs.collapse", function(e) {
-        $(e.target).closest(".card").find(".small-preview").show();
+        $(e.target).closest(".card").find(".small-img").show();
     });
+
 
 });
 
