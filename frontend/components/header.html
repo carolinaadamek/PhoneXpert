@@ -1,31 +1,31 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container">
     <a class="navbar-brand logo" href="index.html">PhoneXPert</a>
-    <div class="ms-auto auth-buttons">
-      <a href="login.html" class="btn btn-outline-light me-2">Login</a>
+    <div class="ms-auto auth-buttons d-flex align-items-center gap-2" id="nav-area">
+      <a href="login.html" class="btn btn-outline-light">Login</a>
       <a href="register.html" class="btn btn-light">Registrieren</a>
     </div>
   </div>
 </nav>
 
 <script>
-  console.log("Header geladen!");
   $.get("../../backend/auth/check_login.php", function(response) {
-    console.log(response); // <-- DAS hier einbauen!
     if (response.loggedIn) {
-      let adminBtn = "";
+      let buttons = `<a href="cart.html" class="btn btn-outline-light">Warenkorb</a>`;
+
       if (response.typ === "admin") {
-        adminBtn = `<a href="../../frontend/views/create_product.html" class="btn btn-light me-2">Produkte anlegen</a>`;
+        buttons += `
+          <a href="create_product.html" class="btn btn-light">Produkte anlegen</a>
+          <a href="admin_orders.html" class="btn btn-light">Bestellungen verwalten</a>
+        `;
       }
 
-      $(".auth-buttons").html(`
-        ${adminBtn}
-        <span class="text-white me-3">Hallo, ${response.vorname}</span>
-        <a href="../../backend/auth/logout.php" class="btn btn-outline-light">Logout</a>
-      `);
+      buttons += `
+        <span class="text-white ms-2">Hallo, ${response.vorname}</span>
+        <a href="../../backend/auth/logout.php" class="btn btn-outline-light ms-2">Logout</a>
+      `;
+
+      $("#nav-area").html(buttons);
     }
   }, "json");
 </script>
-
-
-
