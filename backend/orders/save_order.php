@@ -1,39 +1,67 @@
 <?php
-// backend/orders/save_order.php
-
 header('Content-Type: application/json');
 require_once '../config/db.php';
 
+// JSON-Daten einlesen
 $data = json_decode(file_get_contents("php://input"), true);
 
-if (!isset($data['cart'], $data['lieferadresse'], $data['rechnungsadresse'], $data['gesamt'], $data['gutscheincode'], $data['rabatt'])) {
-    echo json_encode(['success' => false, 'message' => 'Ungültige Daten']);
+if (
+    empty($data['cart']) ||
+    !is_array($data['cart']) ||
+    empty($data['lieferadresse']) ||
+    empty($data['rechnungsadresse'])
+) {
+    http_response_code(400);
+    echo json_encode(['success' => false, 'message' => 'Ungültige oder fehlende Daten.']);
     exit;
 }
 
+$cart = $data['cart'];
+$lieferadresse = $conn->real_escape_string(trim($data['lieferadresse']));
+$rechnungsadresse = $conn->real_escape_string(trim($data['rechnungsadresse']));
+$gutscheincode = isset($data['gutscheincode']) ? $conn->real_escape_string($data['gutscheincode']) : null;
+$rabatt = floatval($data['rabatt'] ?? 0);
+
+// Gesamtsumme berechnen
+$gesamt = 0;
+foreach ($cart as $item) {
+    if (!isset($item['price'], $item['quantity'])) continue;
+    $gesamt += floatval($item['price']) * intval($item['quantity']);
+}
+
+if ($rabatt > 0 && $rabatt <= 100) {
+    $gesamt *= (1 - ($rabatt / 100));
+}
+
+// Transaktion starten
+$conn->begin_transaction();
+
 try {
-    $pdo->beginTransaction();
+    // Bestellung einfügen
+    $stmt = $conn->prepare("INSERT INTO orders (lieferadresse, rechnungsadresse, gutscheincode, rabatt, gesamt, erstellt_am) VALUES (?, ?, ?, ?, ?, NOW())");
+    $stmt->bind_param("sssdd", $lieferadresse, $rechnungsadresse, $gutscheincode, $rabatt, $gesamt);
+    $stmt->execute();
 
-    $stmt = $pdo->prepare("INSERT INTO orders (lieferadresse, rechnungsadresse, gutscheincode, rabatt, gesamt) VALUES (?, ?, ?, ?, ?)");
-    $stmt->execute([
-        $data['lieferadresse'],
-        $data['rechnungsadresse'],
-        $data['gutscheincode'],
-        $data['rabatt'],
-        $data['gesamt']
-    ]);
+    $orderId = $stmt->insert_id;
 
-    $orderId = $pdo->lastInsertId();
+    // Produkte einfügen
+    $itemStmt = $conn->prepare("INSERT INTO order_items (order_id, produktname, preis, menge) VALUES (?, ?, ?, ?)");
 
-    $itemStmt = $pdo->prepare("INSERT INTO order_items (order_id, produktname, preis, menge) VALUES (?, ?, ?, ?)");
-    foreach ($data['cart'] as $item) {
-        $itemStmt->execute([$orderId, $item['name'], $item['price'], $item['quantity']]);
+    foreach ($cart as $item) {
+        if (!isset($item['name'], $item['price'], $item['quantity'])) continue;
+        $name = $conn->real_escape_string($item['name']);
+        $price = floatval($item['price']);
+        $quantity = intval($item['quantity']);
+        $itemStmt->bind_param("isdi", $orderId, $name, $price, $quantity);
+        $itemStmt->execute();
     }
 
-    $pdo->commit();
-    echo json_encode(['success' => true]);
+    $conn->commit();
+    echo json_encode(['success' => true, 'order_id' => $orderId]);
 
 } catch (Exception $e) {
-    $pdo->rollBack();
-    echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+    $conn->rollback();
+    http_response_code(500);
+    echo json_encode(['success' => false, 'message' => 'Fehler beim Speichern der Bestellung.']);
 }
+?>

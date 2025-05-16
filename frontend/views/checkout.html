@@ -10,74 +10,86 @@
 </head>
 <body class="wrapper">
 
+  <!-- Header -->
   <header id="header-placeholder"></header>
 
+  <!-- Hauptinhalt -->
   <main class="container my-5" style="max-width: 720px;">
     <h2 class="text-center mb-4">Zahlung abschließen</h2>
+
     <form id="checkout-form">
+      <!-- Lieferadresse -->
       <h5>Lieferadresse</h5>
       <div class="row">
-        <div class="col-md-6 mb-3"><input class="form-control" id="liefer-vorname" placeholder="Vorname" required></div>
-        <div class="col-md-6 mb-3"><input class="form-control" id="liefer-nachname" placeholder="Nachname" required></div>
-        <div class="col-md-8 mb-3"><input class="form-control" id="liefer-strasse" placeholder="Straße" required></div>
-        <div class="col-md-4 mb-3"><input class="form-control" id="liefer-nummer" placeholder="Hausnummer" required></div>
-        <div class="col-md-4 mb-3"><input class="form-control" id="liefer-plz" placeholder="PLZ" required></div>
-        <div class="col-md-4 mb-3"><input class="form-control" id="liefer-ort" placeholder="Ort" required></div>
-        <div class="col-md-4 mb-3"><input class="form-control" id="liefer-land" placeholder="Land" required></div>
+        <div class="col-md-6 mb-3"><input class="form-control" name="vorname" placeholder="Vorname" required></div>
+        <div class="col-md-6 mb-3"><input class="form-control" name="nachname" placeholder="Nachname" required></div>
+        <div class="col-md-8 mb-3"><input class="form-control" name="strasse" placeholder="Straße" required></div>
+        <div class="col-md-4 mb-3"><input class="form-control" name="nummer" placeholder="Hausnummer" required></div>
+        <div class="col-md-4 mb-3"><input class="form-control" name="plz" placeholder="PLZ" required></div>
+        <div class="col-md-4 mb-3"><input class="form-control" name="ort" placeholder="Ort" required></div>
+        <div class="col-md-4 mb-3"><input class="form-control" name="land" placeholder="Land" required></div>
       </div>
 
+      <!-- Checkbox Rechnungsadresse -->
       <div class="form-check mb-3">
-        <input class="form-check-input" type="checkbox" id="gleichAdresse" checked>
+        <input class="form-check-input" type="checkbox" id="gleichAdresse" name="gleichAdresse" checked>
         <label class="form-check-label" for="gleichAdresse">Rechnungsadresse entspricht Lieferadresse</label>
       </div>
 
+      <!-- Rechnungsadresse -->
       <div id="rechnungsfelder" style="display: none;">
         <h5>Rechnungsadresse</h5>
         <div class="row">
-          <div class="col-md-6 mb-3"><input class="form-control" id="rechnung-vorname" placeholder="Vorname"></div>
-          <div class="col-md-6 mb-3"><input class="form-control" id="rechnung-nachname" placeholder="Nachname"></div>
-          <div class="col-md-8 mb-3"><input class="form-control" id="rechnung-strasse" placeholder="Straße"></div>
-          <div class="col-md-4 mb-3"><input class="form-control" id="rechnung-nummer" placeholder="Hausnummer"></div>
-          <div class="col-md-4 mb-3"><input class="form-control" id="rechnung-plz" placeholder="PLZ"></div>
-          <div class="col-md-4 mb-3"><input class="form-control" id="rechnung-ort" placeholder="Ort"></div>
-          <div class="col-md-4 mb-3"><input class="form-control" id="rechnung-land" placeholder="Land"></div>
+          <div class="col-md-6 mb-3"><input class="form-control" name="r_vorname" placeholder="Vorname"></div>
+          <div class="col-md-6 mb-3"><input class="form-control" name="r_nachname" placeholder="Nachname"></div>
+          <div class="col-md-8 mb-3"><input class="form-control" name="r_strasse" placeholder="Straße"></div>
+          <div class="col-md-4 mb-3"><input class="form-control" name="r_nummer" placeholder="Hausnummer"></div>
+          <div class="col-md-4 mb-3"><input class="form-control" name="r_plz" placeholder="PLZ"></div>
+          <div class="col-md-4 mb-3"><input class="form-control" name="r_ort" placeholder="Ort"></div>
+          <div class="col-md-4 mb-3"><input class="form-control" name="r_land" placeholder="Land"></div>
         </div>
       </div>
 
       <hr>
 
+      <!-- Zahlungsdaten -->
       <h5>Kreditkartendaten</h5>
       <div class="mb-3">
-        <input type="text" class="form-control" id="cardNumber" placeholder="Kartennummer" required>
+        <input type="text" class="form-control" name="cardNumber" placeholder="Kartennummer" required>
       </div>
       <div class="row">
-        <div class="col-md-6 mb-3"><input class="form-control" id="expiry" placeholder="MM/YY" required></div>
-        <div class="col-md-6 mb-3"><input class="form-control" id="cvc" placeholder="CVC" required></div>
+        <div class="col-md-6 mb-3"><input class="form-control" name="expiry" placeholder="MM/YY" required></div>
+        <div class="col-md-6 mb-3"><input class="form-control" name="cvc" placeholder="CVC" required></div>
       </div>
 
       <hr>
 
+      <!-- Gutscheincode -->
       <div class="mb-3">
         <label for="voucher" class="form-label">Gutscheincode</label>
         <input class="form-control" id="voucher" placeholder="z. B. RABATT10">
         <div id="voucher-feedback" class="text-success small mt-1"></div>
       </div>
 
+      <!-- Gesamtsumme -->
       <div class="mb-3 text-end">
         <strong>Gesamt: <span id="total-price">0.00</span> €</strong>
       </div>
 
-      <button class="btn btn-success w-100">Zahlung abschließen</button>
+      <button type="submit" class="btn btn-success w-100">Zahlung abschließen</button>
     </form>
   </main>
 
+  <!-- Footer -->
   <footer id="footer-placeholder"></footer>
 
+  <!-- Header/Footer dynamisch laden -->
   <script>
     $(function () {
       $('#header-placeholder').load('../components/header.html');
       $('#footer-placeholder').load('../components/footer.html');
     });
   </script>
+
 </body>
 </html>

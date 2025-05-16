@@ -1,23 +1,48 @@
 <?php
-require_once '../config/db.php'; // Passe ggf. den Pfad an
+// Fehlerausgabe aktivieren
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
+// JSON Header setzen
 header('Content-Type: application/json');
 
-try {
-    $sql = "SELECT * FROM orders ORDER BY erstellt_am DESC";
-    $stmt = $db->prepare($sql);
-    $stmt->execute();
-    $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// DB-Verbindung laden
+require_once __DIR__ . '/../../config/db.php';
 
-    foreach ($orders as &$order) {
+// Prüfen, ob Verbindung existiert
+if (!isset($conn) || $conn->connect_error) {
+    echo json_encode(['error' => 'Keine gültige Datenbankverbindung']);
+    exit;
+}
+
+try {
+    $orders = [];
+
+    // Alle Bestellungen abrufen
+    $sql = "SELECT * FROM orders ORDER BY erstellt_am DESC";
+    $result = $conn->query($sql);
+
+    while ($order = $result->fetch_assoc()) {
         $orderId = $order['id'];
-        $stmtItems = $db->prepare("SELECT produktname, preis, menge FROM order_items WHERE order_id = ?");
-        $stmtItems->execute([$orderId]);
-        $order['items'] = $stmtItems->fetchAll(PDO::FETCH_ASSOC);
+
+        // Bestellpositionen abrufen
+        $itemQuery = $conn->prepare("SELECT produktname, preis, menge FROM order_items WHERE order_id = ?");
+        $itemQuery->bind_param("i", $orderId);
+        $itemQuery->execute();
+        $itemResult = $itemQuery->get_result();
+
+        $order['items'] = [];
+        while ($item = $itemResult->fetch_assoc()) {
+            $order['items'][] = $item;
+        }
+
+        $orders[] = $order;
     }
 
     echo json_encode($orders);
-} catch (PDOException $e) {
+
+} catch (Exception $e) {
     http_response_code(500);
     echo json_encode([
         'error' => 'Fehler beim Abrufen der Bestellungen',
@@ -25,3 +50,4 @@ try {
     ]);
     exit;
 }
+?>
