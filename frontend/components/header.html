@@ -1,0 +1,42 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container">
+    <a class="navbar-brand logo" href="index.html">PhoneXPert</a>
+    <div class="ms-auto auth-buttons d-flex align-items-center gap-2" id="nav-area">
+      <a href="login.html" class="btn btn-outline-light">Login</a>
+      <a href="register.html" class="btn btn-light">Registrieren</a>
+    </div>
+  </div>
+</nav>
+
+<script>
+  $.get("../../backend/auth/check_login.php", function(response) {
+    if (response.loggedIn) {
+      let buttons = `
+      <a href="cart.html" class="btn btn-outline-light">Warenkorb</a>
+      <a href="profil.html" class="btn btn-outline-light">Profil</a>
+        `;
+
+
+
+      if (response.typ === "kunde") {
+        buttons += `
+          <a href="kunden_orders.html" class="btn btn-light">Bestellungen</a>
+        `;
+      }
+
+
+      if (response.typ === "admin") {
+        buttons += `
+          <a href="admin_dashboard.html" class="btn btn-light">Admin</a>
+        `;
+      }
+
+      buttons += `
+        <span class="text-white ms-2">Hallo, ${response.vorname}</span>
+        <a href="../../backend/auth/logout.php" class="btn btn-outline-light ms-2">Logout</a>
+      `;
+
+      $("#nav-area").html(buttons);
+    }
+  }, "json");
+</script>

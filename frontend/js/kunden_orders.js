@@ -1,0 +1,47 @@
+document.addEventListener("DOMContentLoaded", function () {
+    const container = document.getElementById("bestellungen-container");
+
+    fetch("../../backend/orders/get_user_orders.php")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Serverantwort war nicht OK");
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (!Array.isArray(data) || data.length === 0) {
+                container.innerHTML = "<p class='text-muted'>Keine Bestellungen gefunden.</p>";
+                return;
+            }
+
+            let html = "";
+
+            data.forEach(order => {
+                const produkte = (order.items || []).map(p =>
+                    `<li>${p.produktname} – ${p.menge} x ${parseFloat(p.preis).toFixed(2)} €</li>`
+                ).join("");
+
+                html += `
+          <div class="card mb-4 shadow">
+            <div class="card-body">
+              <h5 class="card-title">Bestellung #${order.id}</h5>
+              <p><strong>Lieferadresse:</strong> ${order.lieferadresse || "-"}</p>
+              <p><strong>Rechnungsadresse:</strong> ${order.rechnungsadresse || "-"}</p>
+              <p><strong>Gutscheincode:</strong> ${order.gutscheincode || "-"}</p>
+              <p><strong>Rabatt:</strong> ${order.rabatt ?? 0}%</p>
+              <p><strong>Gesamtsumme:</strong> ${parseFloat(order.gesamt).toFixed(2)} €</p>
+              <p><strong>Erstellt am:</strong> ${new Date(order.erstellt_am).toLocaleString()}</p>
+              <p><strong>Produkte:</strong></p>
+              <ul>${produkte}</ul>
+            </div>
+          </div>
+        `;
+            });
+
+            container.innerHTML = html;
+        })
+        .catch(error => {
+            console.error("Fehler beim Laden der Bestellungen:", error);
+            container.innerHTML = "<p class='text-danger'>Fehler beim Laden der Bestellungen.</p>";
+        });
+});

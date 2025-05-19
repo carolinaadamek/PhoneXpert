@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Warenkorb</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="../js/cart.js" defer></script>
+</head>
+<body class="wrapper">
+
+  <!-- HEADER -->
+  <header id="header-placeholder"></header>
+
+  <!-- INHALT -->
+  <main class="container">
+    <h1 class="mb-4 text-center">Dein Warenkorb</h1>
+    <div id="warenkorb-inhalt" class="mb-4">Wird geladen...</div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer id="footer-placeholder"></footer>
+
+  <!-- HEADER + FOOTER LADEN -->
+  <script>
+    $("#header-placeholder").load("../components/header.html?v=" + new Date().getTime());
+    $("#footer-placeholder").load("../components/footer.html");
+  </script>
+
+</body>
+</html>

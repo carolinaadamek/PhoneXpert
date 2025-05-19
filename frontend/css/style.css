@@ -1,0 +1,46 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    background-color: #f8f9fa;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex-grow: 1;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.square-card {
+    overflow: hidden;
+}
+
+.small-img {
+    max-height: 100px;
+    object-fit: contain;
+    background-color: #fff;
+    padding: 4px;
+}
+
+.big-img {
+    max-height: 400px;
+    object-fit: contain;
+    background-color: #f9f9f9;
+    padding: 8px;
+}
+
+footer {
+    background-color: #f1f1f1;
+    text-align: center;
+    padding: 15px 0;
+    font-size: 0.9rem;
+    color: #666;
+}
