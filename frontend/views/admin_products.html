@@ -1,37 +1,73 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <title>Produkte verwalten</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/style.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <meta charset="UTF-8">
+  <title>Produkte verwalten</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body class="wrapper">
 
-<!-- HEADER -->
-<div id="header"></div>
+  <!-- HEADER -->
+  <div id="header"></div>
 
-<!-- INHALT -->
-<main>
-    <div class="container mt-5">
-        <h2 class="text-center text-muted mb-4">Produktverwaltung</h2>
-        <div id="produktListe">Wird geladen...</div>
+  <!-- INHALT -->
+  <main class="container mt-5">
+    <h2 class="text-center mb-4">Produktverwaltung</h2>
+    <div id="produktListe">Wird geladen...</div>
+  </main>
+
+  <!-- BEARBEITEN MODAL -->
+  <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editModalLabel">Produkt bearbeiten</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="editProductId">
+          <div class="mb-3">
+            <label for="editProductName" class="form-label">Name</label>
+            <input type="text" class="form-control" id="editProductName">
+          </div>
+          <div class="mb-3">
+            <label for="editProductPrice" class="form-label">Preis (€)</label>
+            <input type="number" step="0.01" class="form-control" id="editProductPrice">
+          </div>
+          <div class="mb-3">
+            <label for="editProductImage" class="form-label">Bildpfad</label>
+            <input type="text" class="form-control" id="editProductImage">
+          </div>
+          <div class="mb-3">
+            <label for="editProductDescription" class="form-label">Beschreibung</label>
+            <textarea class="form-control" id="editProductDescription" rows="3"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+          <button type="button" class="btn btn-primary" id="saveProductChanges">Speichern</button>
+        </div>
+      </div>
     </div>
-</main>
+  </div>
 
-<!-- FOOTER -->
-<div id="footer"></div>
+  <!-- FOOTER -->
+  <div id="footer"></div>
 
-<!-- LADEN HEADER/FOOTER -->
-<script>
+  <!-- HEADER & FOOTER LADEN -->
+  <script>
     $("#header").load("../components/header.html?v=" + new Date().getTime());
     $("#footer").load("../components/footer.html");
-</script>
+  </script>
 
-<!-- SCRIPTS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="../js/admin_products.js" defer></script>
+  <script src="../js/header.js" defer></script>
+
+  <!-- BOOTSTRAP & APP SCRIPT -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/admin_products.js?v=999" defer></script>
+
 </body>
 </html>
-

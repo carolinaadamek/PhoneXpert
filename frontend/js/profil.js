@@ -36,38 +36,38 @@ $(document).ready(function () {
             }
         });
     });
-});
 
-$("#pwForm").on("submit", function (e) {
-    e.preventDefault();
+    // Passwort ändern
+    $("#pwForm").on("submit", function (e) {
+        e.preventDefault();
 
-    const oldPw = $("#old_pw").val();
-    const newPw = $("#new_pw").val();
-    const repeatPw = $("#repeat_pw").val();
+        const oldPw = $("#old_pw").val();
+        const newPw = $("#new_pw").val();
+        const repeatPw = $("#repeat_pw").val();
 
-    if (newPw !== repeatPw) {
-        $("#pw_meldung").html(`<span class="text-danger">Die neuen Passwörter stimmen nicht überein.</span>`);
-        return;
-    }
-
-    $.ajax({
-        url: "../../backend/auth/change_password.php",
-        method: "POST",
-        contentType: "application/json",
-        data: JSON.stringify({
-            old_password: oldPw,
-            new_password: newPw
-        }),
-        dataType: "json",
-        success: function (response) {
-            $("#pw_meldung").html(`<span class="${response.status === 'success' ? 'text-success' : 'text-danger'}">${response.message}</span>`);
-            if (response.status === "success") {
-                $("#pwForm")[0].reset();
-            }
-        },
-        error: function () {
-            $("#pw_meldung").html(`<span class="text-danger">Fehler beim Ändern des Passworts.</span>`);
+        if (newPw !== repeatPw) {
+            $("#pw_meldung").html(`<span class="text-danger">Die neuen Passwörter stimmen nicht überein.</span>`);
+            return;
         }
+
+        $.ajax({
+            url: "../../backend/auth/change_password.php",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({
+                old_password: oldPw,
+                new_password: newPw
+            }),
+            dataType: "json",
+            success: function (response) {
+                $("#pw_meldung").html(`<span class="${response.status === 'success' ? 'text-success' : 'text-danger'}">${response.message}</span>`);
+                if (response.status === "success") {
+                    $("#pwForm")[0].reset();
+                }
+            },
+            error: function () {
+                $("#pw_meldung").html(`<span class="text-danger">Fehler beim Ändern des Passworts.</span>`);
+            }
+        });
     });
 });
-

@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>PhoneXPert</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -13,29 +14,23 @@
   <div id="header"></div>
 
   <!-- INHALT -->
-  <main>
-    <div class="container mt-5">
-      <h1 class="text-center text-muted">Willkommen bei PhoneXPert</h1>
-    </div>
+  <main class="container mt-5">
+    <h1 class="text-center text-muted mb-5">Willkommen bei PhoneXPert</h1>
 
-    <div class="container mt-5">
-      <div class="row justify-content-center">
-        <div class="col-md-6">
-          <input type="text" id="produktSuche" class="form-control" placeholder="Produkte durchsuchen...">
-        </div>
+    <div class="row justify-content-center mb-5">
+      <div class="col-md-6">
+        <input type="text" id="produktSuche" class="form-control" placeholder="Produkte durchsuchen...">
       </div>
     </div>
 
-    <div class="container mt-5">
-      <h2 class="mb-4">Unsere Produkte</h2>
-      <div id="produktContainer" class="row g-4"></div>
-    </div>
+    <h2 class="mb-4">Unsere Produkte</h2>
+    <div id="produktContainer" class="row g-4"></div>
   </main>
 
   <!-- FOOTER -->
   <div id="footer"></div>
 
-  <!-- LADEN HEADER/FOOTER -->
+  <!-- LADE HEADER & FOOTER -->
   <script>
     $("#header").load("../components/header.html?v=" + new Date().getTime());
     $("#footer").load("../components/footer.html");
@@ -43,6 +38,7 @@
 
   <!-- SCRIPTS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="../js/index.js"></script>
+  <script src="../js/header.js" defer></script>
+  <script src="../js/index.js" defer></script>
 </body>
 </html>

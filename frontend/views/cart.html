@@ -3,30 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <title>Warenkorb</title>
-  <link rel="stylesheet" href="../css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="../js/cart.js" defer></script>
 </head>
 <body class="wrapper">
 
   <!-- HEADER -->
-  <header id="header-placeholder"></header>
+  <div id="header"></div>
 
   <!-- INHALT -->
-  <main class="container">
-    <h1 class="mb-4 text-center">Dein Warenkorb</h1>
-    <div id="warenkorb-inhalt" class="mb-4">Wird geladen...</div>
+  <main class="container mt-5">
+    <h1 class="text-center mb-4">Dein Warenkorb</h1>
+    <div id="warenkorb-inhalt" class="mb-5 text-muted text-center">
+      Wird geladen...
+    </div>
   </main>
 
   <!-- FOOTER -->
-  <footer id="footer-placeholder"></footer>
+  <div id="footer"></div>
 
   <!-- HEADER + FOOTER LADEN -->
   <script>
-    $("#header-placeholder").load("../components/header.html?v=" + new Date().getTime());
-    $("#footer-placeholder").load("../components/footer.html");
+    $("#header").load("../components/header.html?v=" + new Date().getTime());
+    $("#footer").load("../components/footer.html");
   </script>
+  <script src="../js/header.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

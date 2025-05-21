@@ -1,7 +1,8 @@
 <?php
-global $conn;
 require_once '../../config/db.php';
 header('Content-Type: application/json');
+
+global $conn;
 
 $result = $conn->query("SELECT id, name, preis, beschreibung, image_path FROM produkt ORDER BY id DESC");
 $produkte = [];

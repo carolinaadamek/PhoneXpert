@@ -3,98 +3,103 @@
 <head>
   <meta charset="UTF-8">
   <title>Checkout</title>
-  <link rel="stylesheet" href="../css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="../js/checkout.js" defer></script>
 </head>
 <body class="wrapper">
 
-<header id="header-placeholder"></header>
+  <!-- HEADER -->
+  <div id="header"></div>
 
-<main class="container my-5" style="max-width: 720px;">
-  <h2 class="text-center mb-4">Zahlung abschließen</h2>
+  <!-- INHALT -->
+  <main class="container mt-5" style="max-width: 720px;">
+    <h2 class="text-center mb-4">Zahlung abschließen</h2>
 
-  <form id="checkout-form" novalidate>
-    <!-- Lieferadresse -->
-    <h5>Lieferadresse</h5>
-    <div class="row">
-      <div class="col-md-6 mb-3"><input class="form-control" name="vorname" placeholder="Vorname" required></div>
-      <div class="col-md-6 mb-3"><input class="form-control" name="nachname" placeholder="Nachname" required></div>
-      <div class="col-md-8 mb-3"><input class="form-control" name="strasse" placeholder="Straße" required></div>
-      <div class="col-md-4 mb-3"><input class="form-control" name="nummer" placeholder="Hausnummer" required></div>
-      <div class="col-md-4 mb-3"><input class="form-control" name="plz" placeholder="PLZ" required></div>
-      <div class="col-md-4 mb-3"><input class="form-control" name="ort" placeholder="Ort" required></div>
-      <div class="col-md-4 mb-3"><input class="form-control" name="land" placeholder="Land" required></div>
-    </div>
-
-    <!-- Checkbox Rechnungsadresse -->
-    <div class="form-check mb-3">
-      <input class="form-check-input" type="checkbox" id="gleichAdresse" name="gleichAdresse" checked>
-      <label class="form-check-label" for="gleichAdresse">Rechnungsadresse entspricht Lieferadresse</label>
-    </div>
-
-    <!-- Rechnungsadresse -->
-    <div id="rechnungsfelder" style="display: none;">
-      <h5>Rechnungsadresse</h5>
+    <form id="checkout-form" novalidate>
+      <!-- Lieferadresse -->
+      <h5>Lieferadresse</h5>
       <div class="row">
-        <div class="col-md-6 mb-3"><input class="form-control" name="r_vorname" placeholder="Vorname"></div>
-        <div class="col-md-6 mb-3"><input class="form-control" name="r_nachname" placeholder="Nachname"></div>
-        <div class="col-md-8 mb-3"><input class="form-control" name="r_strasse" placeholder="Straße"></div>
-        <div class="col-md-4 mb-3"><input class="form-control" name="r_nummer" placeholder="Hausnummer"></div>
-        <div class="col-md-4 mb-3"><input class="form-control" name="r_plz" placeholder="PLZ"></div>
-        <div class="col-md-4 mb-3"><input class="form-control" name="r_ort" placeholder="Ort"></div>
-        <div class="col-md-4 mb-3"><input class="form-control" name="r_land" placeholder="Land"></div>
+        <div class="col-md-6 mb-3"><input class="form-control" name="vorname" placeholder="Vorname" required></div>
+        <div class="col-md-6 mb-3"><input class="form-control" name="nachname" placeholder="Nachname" required></div>
+        <div class="col-md-8 mb-3"><input class="form-control" name="strasse" placeholder="Straße" required></div>
+        <div class="col-md-4 mb-3"><input class="form-control" name="nummer" placeholder="Hausnummer" required></div>
+        <div class="col-md-4 mb-3"><input class="form-control" name="plz" placeholder="PLZ" required></div>
+        <div class="col-md-4 mb-3"><input class="form-control" name="ort" placeholder="Ort" required></div>
+        <div class="col-md-4 mb-3"><input class="form-control" name="land" placeholder="Land" required></div>
       </div>
-    </div>
 
-    <hr>
-
-    <!-- Zahlungsart -->
-    <h5>Zahlungsart</h5>
-    <div class="mb-3">
-      <select class="form-select" id="zahlungsart" name="zahlungsart" required>
-        <option value="rechnung">Rechnung</option>
-        <option value="kreditkarte">Kreditkarte</option>
-      </select>
-    </div>
-
-    <!-- Kreditkartendaten -->
-    <div id="kreditkartenfelder">
-      <h5>Kreditkartendaten</h5>
-      <div class="mb-3"><input type="text" class="form-control" name="cardNumber" placeholder="Kartennummer"></div>
-      <div class="row">
-        <div class="col-md-6 mb-3"><input class="form-control" name="expiry" placeholder="MM/YY"></div>
-        <div class="col-md-6 mb-3"><input class="form-control" name="cvc" placeholder="CVC"></div>
+      <!-- Checkbox Rechnungsadresse -->
+      <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" id="gleichAdresse" name="gleichAdresse" checked>
+        <label class="form-check-label" for="gleichAdresse">Rechnungsadresse entspricht Lieferadresse</label>
       </div>
-    </div>
 
-    <hr>
+      <!-- Rechnungsadresse -->
+      <div id="rechnungsfelder" style="display: none;">
+        <h5>Rechnungsadresse</h5>
+        <div class="row">
+          <div class="col-md-6 mb-3"><input class="form-control" name="r_vorname" placeholder="Vorname"></div>
+          <div class="col-md-6 mb-3"><input class="form-control" name="r_nachname" placeholder="Nachname"></div>
+          <div class="col-md-8 mb-3"><input class="form-control" name="r_strasse" placeholder="Straße"></div>
+          <div class="col-md-4 mb-3"><input class="form-control" name="r_nummer" placeholder="Hausnummer"></div>
+          <div class="col-md-4 mb-3"><input class="form-control" name="r_plz" placeholder="PLZ"></div>
+          <div class="col-md-4 mb-3"><input class="form-control" name="r_ort" placeholder="Ort"></div>
+          <div class="col-md-4 mb-3"><input class="form-control" name="r_land" placeholder="Land"></div>
+        </div>
+      </div>
 
-    <!-- Gutscheincode -->
-    <div class="input-group mb-3">
-      <input type="text" id="voucher" class="form-control" placeholder="Gutscheincode">
-      <button id="voucherBtn" class="btn btn-outline-secondary" type="button">Anwenden</button>
-    </div>
-    <div id="voucher-feedback" class="text-success mb-2"></div>
+      <hr>
 
-    <!-- Gesamtsumme -->
-    <div class="mb-3 text-end">
-      <strong>Gesamt: <span id="total-price">0.00</span> €</strong>
-    </div>
+      <!-- Zahlungsart -->
+      <h5>Zahlungsart</h5>
+      <div class="mb-3">
+        <select class="form-select" id="zahlungsart" name="zahlungsart" required>
+          <option value="rechnung">Rechnung</option>
+          <option value="kreditkarte">Kreditkarte</option>
+        </select>
+      </div>
 
-    <button type="submit" class="btn btn-success w-100">Zahlung abschließen</button>
-  </form>
-</main>
+      <!-- Kreditkartendaten -->
+      <div id="kreditkartenfelder">
+        <h5>Kreditkartendaten</h5>
+        <div class="mb-3"><input type="text" class="form-control" name="cardNumber" placeholder="Kartennummer"></div>
+        <div class="row">
+          <div class="col-md-6 mb-3"><input class="form-control" name="expiry" placeholder="MM/YY"></div>
+          <div class="col-md-6 mb-3"><input class="form-control" name="cvc" placeholder="CVC"></div>
+        </div>
+      </div>
 
-<footer id="footer-placeholder"></footer>
+      <hr>
 
-<script>
-  $(function () {
-    $('#header-placeholder').load('../components/header.html');
-    $('#footer-placeholder').load('../components/footer.html');
-  });
-</script>
+      <!-- Gutscheincode -->
+      <div class="input-group mb-3">
+        <input type="text" id="voucher" class="form-control" placeholder="Gutscheincode">
+        <button id="voucherBtn" class="btn btn-outline-primary" type="button">Anwenden</button>
+      </div>
+      <div id="voucher-feedback" class="text-success mb-2"></div>
+
+      <!-- Gesamtsumme -->
+      <div class="mb-3 text-end">
+        <strong>Gesamt: <span id="total-price">0.00</span> €</strong>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100">Zahlung abschließen</button>
+    </form>
+  </main>
+
+  <!-- FOOTER -->
+  <div id="footer"></div>
+
+  <!-- LADE HEADER + FOOTER -->
+  <script>
+    $("#header").load("../components/header.html?v=" + new Date().getTime());
+    $("#footer").load("../components/footer.html");
+  </script>
+  <script src="../js/header.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

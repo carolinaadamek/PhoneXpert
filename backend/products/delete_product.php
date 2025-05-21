@@ -1,8 +1,9 @@
 <?php
-global $conn;
 session_start();
 require_once '../../config/db.php';
 header('Content-Type: application/json');
+
+global $conn;
 
 // Nur Admin darf löschen
 if (!isset($_SESSION['user_id']) || $_SESSION['typ'] !== 'admin') {
