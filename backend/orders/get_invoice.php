@@ -26,8 +26,8 @@ $fpdf->Image('../../frontend/img/logo.png', 150, 10, 40);
 
 // ✅ Firmenanschrift
 $fpdf->Cell(0, 10, 'PhoneXpert GmbH', 0, 1);
-$fpdf->Cell(0, 8, 'Engerthstraße 123, 1200 Wien', 0, 1);
-$fpdf->Cell(0, 8, 'office@phonexpert.at', 0, 1);
+$fpdf->Cell(0, 8, 'Hofstädterstraße 6, 1200 Wien', 0, 1);
+$fpdf->Cell(0, 8, 'kontakt@phonexpert.at', 0, 1);
 $fpdf->Ln(10);
 
 // ✅ Rechnungstitel
