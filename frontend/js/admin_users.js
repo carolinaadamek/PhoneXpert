@@ -1,11 +1,13 @@
 $(document).ready(function () {
     ladeBenutzer();
 
+    // Holt alle Benutzer und zeigt sie als Tabelle an
     function ladeBenutzer() {
         $.getJSON("../../backend/auth/get_all_users.php", function (users) {
             let html = `<table class="table table-striped"><thead>
         <tr><th>Name</th><th>Username</th><th>E-Mail</th><th>Rolle</th><th>Status</th><th></th></tr>
       </thead><tbody>`;
+
             users.forEach(user => {
                 html += `<tr>
           <td>${user.vorname} ${user.nachname}</td>
@@ -16,11 +18,13 @@ $(document).ready(function () {
           <td><button class="btn btn-sm btn-primary edit-btn" data-user='${JSON.stringify(user)}'>Bearbeiten</button></td>
         </tr>`;
             });
+
             html += `</tbody></table>`;
             $("#userTabelle").html(html);
         });
     }
 
+    // Öffnet Modal mit vorausgefüllten Userdaten
     $(document).on("click", ".edit-btn", function () {
         const user = $(this).data("user");
         $("#edit_id").val(user.id);
@@ -35,6 +39,7 @@ $(document).ready(function () {
         modal.show();
     });
 
+    // Änderungen absenden und speichern
     $("#editForm").on("submit", function (e) {
         e.preventDefault();
         const daten = {
@@ -46,7 +51,7 @@ $(document).ready(function () {
             typ: $("#edit_typ").val(),
             status: $("#edit_status").val()
         };
-
+    // AJAX-Anfrage an Backend senden
         $.ajax({
             url: "../../backend/auth/update_user_by_admin.php",
             method: "POST",

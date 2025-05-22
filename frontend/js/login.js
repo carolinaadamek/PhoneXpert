@@ -1,13 +1,13 @@
 $(document).ready(function () {
   console.log("Login-Skript aktiv");
-
+ // Login-Formular absenden
   $("#loginForm").on("submit", function (e) {
     e.preventDefault();
 
     $.ajax({
       url: "../../backend/auth/login.php",
       method: "POST",
-      data: $(this).serialize(),
+      data: $(this).serialize(), // Formulardaten senden
       dataType: "json",
       success: function (response) {
         if (response.status === "success") {

@@ -5,7 +5,7 @@ require_once '../../config/db.php';
 header('Content-Type: application/json');
 
 
-// 🔒 Zugriff prüfen
+//  Zugriff prüfen
 if (!isset($_SESSION['user_id'])) {
     echo json_encode(["success" => false, "message" => "Nicht eingeloggt"]);
     exit;
@@ -13,7 +13,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $userId = $_SESSION['user_id'];
 
-// 🔍 Nur Bestellungen dieses Benutzers abrufen
+//  Nur Bestellungen dieses Benutzers abrufen
 $stmt = $conn->prepare("SELECT * FROM orders WHERE user_id = ? ORDER BY erstellt_am DESC");
 $stmt->bind_param("i", $userId);
 $stmt->execute();
@@ -22,7 +22,7 @@ $result = $stmt->get_result();
 $orders = [];
 
 while ($order = $result->fetch_assoc()) {
-    // 📦 Produkte zur Bestellung laden
+    //  Produkte zur Bestellung laden
     $posStmt = $conn->prepare("SELECT produktname, preis, menge FROM order_items WHERE order_id = ?");
     $posStmt->bind_param("i", $order['id']);
     $posStmt->execute();
@@ -37,7 +37,7 @@ while ($order = $result->fetch_assoc()) {
     $orders[] = $order;
 }
 
-// ✅ Ausgabe
+//  Ausgabe
 echo json_encode($orders);
 exit;
 

@@ -1,6 +1,7 @@
 $(document).ready(function () {
     ladeProdukte();
 
+    // Produkte laden und anzeigen
     function ladeProdukte() {
         $.getJSON("../../backend/products/get_all_products.php", function (produkte) {
             if (produkte.length === 0) {
@@ -8,6 +9,7 @@ $(document).ready(function () {
                 return;
             }
 
+            // Tabelle mit Produktinfos erstellen
             let html = `<table class="table table-striped"><thead>
                 <tr><th>Name</th><th>Preis</th><th>Bild</th><th>Aktionen</th></tr>
               </thead><tbody>`;
@@ -18,6 +20,7 @@ $(document).ready(function () {
                   <td>${parseFloat(p.preis).toFixed(2)} €</td>
                   <td><img src="../img/${p.image_path}" style="height: 50px"></td>
                   <td>
+                    <!-- Bearbeiten- & Löschen-Button -->
                     <button class="btn btn-sm btn-primary edit-btn"
                             data-id="${p.id}"
                             data-name="${p.name}"
@@ -36,6 +39,7 @@ $(document).ready(function () {
         });
     }
 
+    // Produkt löschen
     $(document).on("click", ".delete-btn", function () {
         const id = $(this).data("id");
         if (!confirm("Produkt wirklich löschen?")) return;
@@ -58,6 +62,7 @@ $(document).ready(function () {
         });
     });
 
+    // Produktdaten in Modal laden
     $(document).on("click", ".edit-btn", function () {
         $("#editProductId").val($(this).data("id"));
         $("#editProductName").val($(this).data("name"));
@@ -68,6 +73,7 @@ $(document).ready(function () {
         modal.show();
     });
 
+    // Änderungen speichern
     $("#saveProductChanges").click(function () {
         const updatedProduct = {
             id: $("#editProductId").val(),

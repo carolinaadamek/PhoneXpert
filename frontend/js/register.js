@@ -1,4 +1,5 @@
 $(document).ready(function () {
+   // Prüft, ob Passwörter übereinstimmen
   function checkPasswordsMatch() {
     const pass1 = $('#password').val();
     const pass2 = $('#password_repeat').val();
@@ -10,10 +11,11 @@ $(document).ready(function () {
       return true;
     }
   }
-
+    // Prüfen bei Eingabe ins zweite Feld
   $("#password_repeat").on("keyup", checkPasswordsMatch);
-
+    // Formular absenden
   $("#registerForm").on("submit", function (e) {
+    // Benutzername existiert bereits
     e.preventDefault();
     if (!checkPasswordsMatch()) return;
 
@@ -28,9 +30,9 @@ $(document).ready(function () {
         } else {
           $("#userCheck").addClass("d-none");
         }
-
+        // Erfolg oder Fehler anzeigen
         $("#meldung").html(`<span class="${response.status === "success" ? 'text-success' : 'text-danger'}">${response.message}</span>`);
-
+        // Bei Erfolg weiterleiten
         if (response.status === "success") {
           setTimeout(() => window.location.href = "login.html", 1500);
         }

@@ -5,16 +5,22 @@ require_once '../../config/db.php';
 
 header('Content-Type: application/json');
 
+// Prüfen, ob der Benutzer eingeloggt ist
 if (!isset($_SESSION['user_id'])) {
     echo json_encode(["status" => "error", "message" => "Nicht eingeloggt."]);
     exit;
 }
 
+// Neue Daten (altes und neues Passwort) als JSON empfangen
 $data = json_decode(file_get_contents("php://input"), true);
 
-$oldPw = $data['old_password'];
-$newPw = $data['new_password'];
+// Passwortfelder auslesen
+$oldPw = $data['old_password']; // altes Passwort
+$newPw = $data['new_password']; // neues Passwort
+
+// Benutzer-ID aus der Session
 $userId = $_SESSION['user_id'];
+
 
 // Aktuelles Passwort holen
 $stmt = $conn->prepare("SELECT passwort FROM benutzer WHERE id = ?");

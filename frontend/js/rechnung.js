@@ -20,14 +20,14 @@ document.getElementById("downloadBtn").addEventListener("click", async function 
       alert("Fehler beim Laden der Rechnung");
       return;
     }
-
+ // Tabelleninhalt vorbereiten
     const rows = res.items.map(item => [
       item.name,
       item.preis,
       item.menge,
       item.gesamt
     ]);
-
+// Tabelle einfügen
     doc.autoTable({
       startY: 60,
       head: [["Produkt", "Einzelpreis", "Menge", "Gesamt"]],
@@ -36,7 +36,7 @@ document.getElementById("downloadBtn").addEventListener("click", async function 
       styles: { halign: "center" },
       headStyles: { fillColor: [0, 171, 200] }
     });
-
+ // Gesamtsumme anzeigen
     doc.setFontSize(14);
     doc.text(`Gesamtsumme: ${res.total}`, 200, doc.lastAutoTable.finalY + 10, { align: "right" });
 

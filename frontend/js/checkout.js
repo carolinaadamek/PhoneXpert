@@ -134,7 +134,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     return isValid;
   }
-
+  // Fehlermeldung anzeigen
   function showInvalid(input, message) {
     const error = document.createElement("div");
     error.className = "invalid-feedback";
@@ -153,7 +153,7 @@ document.addEventListener("DOMContentLoaded", function () {
       alert("Der Warenkorb ist leer.");
       return;
     }
-
+  // Adresse zusammenbauen
     const lieferadresse = [
       form.vorname.value,
       form.nachname.value,
@@ -179,7 +179,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const gutscheincode = voucherInput.value.trim();
     const zahlungstyp = zahlungsart.value;
-
+  // Daten vorbereiten
     const payload = {
       cart,
       lieferadresse,
@@ -193,7 +193,7 @@ document.addEventListener("DOMContentLoaded", function () {
         cvc: form.cvc.value.trim()
       })
     };
-
+  // Bestellung an Backend senden
     fetch("../../backend/orders/save_order.php", {
       method: "POST",
       headers: { "Content-Type": "application/json" },

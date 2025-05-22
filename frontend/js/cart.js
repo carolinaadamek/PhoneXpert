@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   const container = document.getElementById("warenkorb-inhalt");
 
+  // Warenkorb anzeigen
   function renderCart() {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
@@ -24,6 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
         <tbody>
     `;
 
+    // Produkte im Warenkorb durchgehen
     cart.forEach((item, index) => {
       const itemTotal = parseFloat(item.price) * item.quantity;
       total += itemTotal;
@@ -59,6 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
     addEventListeners();
   }
 
+  // Buttons aktivieren: Menge ändern, löschen, leeren
   function addEventListeners() {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
@@ -91,6 +94,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
 
+    // Kompletten Warenkorb leeren
     document.getElementById("clear-cart").addEventListener("click", function () {
       localStorage.removeItem("cart");
       renderCart();

@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     const container = document.getElementById("bestellungen-container");
-
+        // Eigene Bestellungen vom Server laden
     fetch("../../backend/orders/get_user_orders.php")
         .then(response => {
             if (!response.ok) throw new Error("Serverantwort war nicht OK");
@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             let html = "";
-
+        // Jede Bestellung als Card anzeigen
             data.forEach((order, index) => {
                 const produkte = (order.items || []).map(p =>
                     `<li>${p.produktname} – ${p.menge} x ${parseFloat(p.preis).toFixed(2)} €</li>`
@@ -37,14 +37,14 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             container.innerHTML = html;
-            window.allOrders = data;
+            window.allOrders = data; // Zum späteren Zugriff für PDF
         })
         .catch(error => {
             console.error("Fehler beim Laden der Bestellungen:", error);
             container.innerHTML = "<p class='text-danger'>Fehler beim Laden der Bestellungen.</p>";
         });
 });
-
+    // PDF-Rechnung erzeugen
 async function generateInvoice(index) {
     const order = window.allOrders[index];
     const doc = new jspdf.jsPDF();
@@ -69,7 +69,7 @@ async function generateInvoice(index) {
 
         doc.setFontSize(13);
         doc.text("Produkte:", 20, y); y += 8;
-
+        // Produkte auflisten
         order.items.forEach(p => {
             const line = `${p.produktname} – ${p.menge} x ${parseFloat(p.preis).toFixed(2)} €`;
             doc.text(line, 25, y);

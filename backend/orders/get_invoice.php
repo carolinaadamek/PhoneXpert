@@ -8,7 +8,7 @@ if (!isset($_GET['id'])) {
 
 $orderId = intval($_GET['id']);
 
-// ✅ Bestelldaten aus DB holen (inkl. Produkte, User, Adressen usw.)
+//  Bestelldaten aus DB holen (inkl. Produkte, User, Adressen usw.)
 $stmt = $pdo->prepare("SELECT * FROM orders WHERE id = ?");
 $stmt->execute([$orderId]);
 $order = $stmt->fetch();
@@ -21,21 +21,21 @@ $fpdf = new FPDF();
 $fpdf->AddPage();
 $fpdf->SetFont('Arial', '', 12);
 
-// ✅ Logo oben rechts
+//  Logo oben rechts
 $fpdf->Image('../../frontend/img/logo.png', 150, 10, 40);
 
-// ✅ Firmenanschrift
+//  Firmenanschrift
 $fpdf->Cell(0, 10, 'PhoneXpert GmbH', 0, 1);
 $fpdf->Cell(0, 8, 'Hofstädterstraße 6, 1200 Wien', 0, 1);
 $fpdf->Cell(0, 8, 'kontakt@phonexpert.at', 0, 1);
 $fpdf->Ln(10);
 
-// ✅ Rechnungstitel
+//  Rechnungstitel
 $fpdf->SetFont('Arial', 'B', 16);
 $fpdf->Cell(0, 10, 'Rechnung', 0, 1, 'C');
 $fpdf->Ln(5);
 
-// ✅ Rechnungsdaten
+//  Rechnungsdaten
 $fpdf->SetFont('Arial', '', 12);
 $fpdf->Cell(0, 8, 'Rechnungsdatum: ' . date('d.m.Y', strtotime($order['erstellt_am'])), 0, 1);
 $fpdf->Cell(0, 8, 'Rechnungsadresse: ' . $order['rechnungsadresse'], 0, 1);
@@ -43,12 +43,12 @@ $fpdf->Cell(0, 8, 'Gutscheincode: ' . ($order['gutscheincode'] ?: '-'), 0, 1);
 $fpdf->Cell(0, 8, 'Rabatt: ' . ($order['rabatt'] ?? 0) . '%', 0, 1);
 $fpdf->Ln(5);
 
-// ✅ Produkte laden
+//  Produkte laden
 $stmt2 = $pdo->prepare("SELECT * FROM order_items WHERE order_id = ?");
 $stmt2->execute([$orderId]);
 $items = $stmt2->fetchAll();
 
-// ✅ Produkttabelle
+//  Produkttabelle
 $fpdf->SetFont('Arial', 'B', 12);
 $fpdf->Cell(80, 8, 'Produkt', 1);
 $fpdf->Cell(30, 8, 'Menge', 1);

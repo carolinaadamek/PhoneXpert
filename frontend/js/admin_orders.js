@@ -10,13 +10,14 @@ document.addEventListener("DOMContentLoaded", function () {
             return response.json();
         })
         .then(data => {
+            // Keine Bestellungen vorhanden
             if (!Array.isArray(data) || data.length === 0) {
                 container.innerHTML = "<p class='text-muted'>Keine Bestellungen gefunden.</p>";
                 return;
             }
 
             let html = "";
-
+            // Jede Bestellung als Card anzeigen
             data.forEach(order => {
                 const produkte = (order.items || []).map(p =>
                     `<li>${p.produktname} – ${p.menge} x ${parseFloat(p.preis).toFixed(2)} €</li>`
